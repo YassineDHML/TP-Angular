@@ -1,0 +1,45 @@
+<div class="minimal-container">
+  <!-- Utilisation de la propriété title -->
+  <div class="hero">
+    <h1 class="title">🌈 {{ title }}</h1>
+    <p class="subtitle">Tapez pour découvrir les couleurs</p>
+  </div>
+
+  <div class="input-container">
+    <!-- Input avec référence pour la méthode resetInput -->
+    <input 
+      #mainInput
+      type="text"
+      rainbowInput
+      placeholder="Commencez à taper..."
+      class="rainbow-input"
+    >
+    
+    <!-- Bouton qui utilise la méthode resetInput -->
+    <button 
+      class="reset-btn"
+      (click)="resetInput(mainInput)"
+    >
+        Réinitialiser
+    </button>
+  </div>
+
+  <!-- Section démo avec plusieurs inputs -->
+  <div class="demo-section">
+    <h3>Plus de démonstrations :</h3>
+    <div class="demo-inputs">
+      <input 
+        type="email"
+        rainbowInput
+        placeholder="Email de démo"
+        class="rainbow-input demo"
+      >
+      <input 
+        type="password"
+        rainbowInput
+        placeholder="Mot de passe de démo"
+        class="rainbow-input demo"
+      >
+    </div>
+  </div>
+</div>
