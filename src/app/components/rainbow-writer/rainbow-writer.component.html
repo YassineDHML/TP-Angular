@@ -1,0 +1,79 @@
+<div class="minimal-container">
+  <!-- En-tête avec signaux -->
+  <div class="hero">
+    <h1 class="title">🌈 {{ title }}</h1>
+    <p class="subtitle">{{ getCurrentColorInfo() }}</p>
+    
+    <!-- Message conditionnel avec computed signal -->
+    @if (showResetMessage()) {
+      <div class="reset-hint">
+        ✨ Plus de 10 caractères ! Vous pouvez tout réinitialiser
+      </div>
+    }
+  </div>
+
+  <!-- Input principal avec suivi des caractères -->
+  <div class="input-container">
+    <input 
+      #mainInput
+      type="text"
+      rainbowInput
+      placeholder="Tapez ici... les signaux surveillent chaque frappe !"
+      class="rainbow-input"
+      (input)="onInput($event)"
+    >
+    
+    <!-- Bouton reset avec signal state -->
+    <button 
+      class="reset-btn"
+      (click)="resetInput(mainInput)"
+      [disabled]="isResetting()"
+    >
+       Réinitialiser cet input
+    </button>
+  </div>
+
+  <!-- Section démo avec plusieurs inputs -->
+  <div class="demo-section">
+    <h3>Démonstration avec plusieurs champs :</h3>
+    <div class="demo-inputs">
+      <input 
+        #emailInput
+        type="email"
+        rainbowInput
+        placeholder="Email (signaux actifs)"
+        class="rainbow-input demo"
+        (input)="onInput($event)"
+      >
+      <input 
+        #passwordInput
+        type="password"
+        rainbowInput
+        placeholder="Mot de passe (signaux actifs)"
+        class="rainbow-input demo"
+        (input)="onInput($event)"
+      >
+    </div>
+
+    <!-- Bouton reset global -->
+    <button 
+      class="reset-all-btn"
+      (click)="resetAllInputs()"
+      [disabled]="isResetting()"
+    >
+      {{ resetButtonText() }}
+    </button>
+  </div>
+
+  <!-- Info sur l'état des signaux -->
+  <div class="signal-info">
+    <div class="info-item">
+      <span class="emoji">⚡</span>
+      <span>Signaux actifs: {{ characterCount() }} caractères tapés</span>
+    </div>
+    <div class="info-item">
+      <span class="emoji">🎯</span>
+      <span>Directive avec signaux Angular</span>
+    </div>
+  </div>
+</div>
