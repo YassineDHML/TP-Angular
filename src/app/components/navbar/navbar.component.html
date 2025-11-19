@@ -5,7 +5,7 @@
       [routerLink]="['']"
       [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active text-primary"
-      >cvStartingAdvProject</a
+      >RxJs</a
     >
     <button
       class="navbar-toggler"
@@ -71,6 +71,12 @@
           [routerLink]="['rh']"
           routerLinkActive="active text-primary"
           >Rh</a
+        >
+        <a
+          class="nav-link"
+          [routerLink]="['products']"
+          routerLinkActive="active text-primary"
+          >Products</a
         >
         <a
           *ngIf="!authService.isAuthenticated()"
