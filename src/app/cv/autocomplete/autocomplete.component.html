@@ -1,3 +1,91 @@
-<form [formGroup]="form">
-  <input type="text" class="form-control" formControlName="search" />
-</form>
+<div class="autocomplete-container">
+  <!-- Formulaire de recherche -->
+  <form [formGroup]="form">
+    <div class="search-wrapper">
+      <input 
+        type="text" 
+        class="form-control" 
+        formControlName="search" 
+        placeholder="Rechercher un CV (nom, prénom...)..."
+        autocomplete="off"
+      />
+      @if (selectedCv) {
+        <button 
+          type="button" 
+          class="btn btn-sm btn-outline-secondary clear-btn"
+          (click)="clearSelection()"
+        >
+          ✕
+        </button>
+      }
+    </div>
+  </form>
+
+  <!-- Liste des résultats de recherche -->
+  @if ((filteredCvs$ | async); as cvs) {
+    @if (cvs.length > 0 && !selectedCv) {
+      <div class="results-dropdown">
+        <ul class="list-group">
+          @for (cv of cvs; track cv.id) {
+            <li 
+              class="list-group-item list-group-item-action"
+              (click)="selectCv(cv)"
+            >
+              <div class="d-flex align-items-center">
+                <img 
+                  [src]="cv.path || 'assets/images/default.png'" 
+                  [alt]="cv.firstname + ' ' + cv.name"
+                  class="cv-avatar me-3"
+                  width="40"
+                  height="40"
+                />
+                <div>
+                  <strong>{{ cv.firstname }} {{ cv.name }}</strong>
+                  <div class="text-muted small">{{ cv.job }}</div>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    } @else if (search.value && cvs.length === 0 && !selectedCv) {
+      <div class="alert alert-info mt-2">
+        Aucun CV trouvé pour "{{ search.value }}"
+      </div>
+    }
+  }
+
+  <!-- Affichage du CV sélectionné -->
+  @if (selectedCv) {
+    <div class="selected-cv-card mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 text-center">
+              <img 
+                [src]="selectedCv.path || 'assets/images/default.png'" 
+                [alt]="selectedCv.firstname + ' ' + selectedCv.name"
+                class="img-fluid rounded-circle"
+                width="150"
+                height="150"
+              />
+            </div>
+            <div class="col-md-9">
+              <h3>{{ selectedCv.firstname }} {{ selectedCv.name }}</h3>
+              <p class="text-muted">{{ selectedCv.job }}</p>
+              <hr>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p><strong>Âge:</strong> {{ selectedCv.age }} ans</p>
+                </div>
+                <div class="col-sm-6">
+                  <p><strong>CIN:</strong> {{ selectedCv.cin }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

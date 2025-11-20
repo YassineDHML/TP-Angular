@@ -3,6 +3,10 @@
     <div class="alert alert-warning">
       {{ date | date : "full" | uppercase }}
     </div>
+    <!-- Composant de recherche autocomplete -->
+    <div class="mb-3">
+      <app-autocomplete></app-autocomplete>
+    </div>
     <app-list [cvs]="cvs"></app-list>
   </div>
   <div class="col">

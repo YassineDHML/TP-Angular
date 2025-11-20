@@ -6,6 +6,7 @@ import { CvService } from "../services/cv.service";
 import { ListComponent } from "../list/list.component";
 import { CvCardComponent } from "../cv-card/cv-card.component";
 import { EmbaucheComponent } from "../embauche/embauche.component";
+import { AutocompleteComponent } from "../autocomplete/autocomplete.component";
 import { UpperCasePipe, DatePipe } from "@angular/common";
 @Component({
     selector: "app-cv",
@@ -16,6 +17,7 @@ import { UpperCasePipe, DatePipe } from "@angular/common";
         ListComponent,
         CvCardComponent,
         EmbaucheComponent,
+        AutocompleteComponent,
         UpperCasePipe,
         DatePipe,
     ],
