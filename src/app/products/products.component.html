@@ -1,17 +1,51 @@
-@if ((products$ | async); as productsList,) {
-  <button class="btn btn-primary"> More Products</button>
-  <div class="alert alert-warning">
-    Product Number: {{productsList?.length}}
-  </div>
-  <div class="row">
-    @for (product of productsList; track product) {
-      <div class="col-4">
-        <img class="rounded-circle" src="{{product.thumbnail}}" width="150px" height="150px">
-        {{product.title}}
-      </div>
+@if (!isLoading()) {
+  <div class="container mt-4">
+    
+    <div class="alert alert-warning">
+      Product Number: {{currentProductCount()}}
+    </div>
+    
+    @if (hasMore()) {
+      <button 
+        class="btn btn-primary mb-3" 
+        (click)="loadMore()"
+      >
+        More Products
+      </button>
     }
+    
+    <div class="row">
+      @for (product of products(); track product.id) {
+        <div class="col-md-4 col-sm-6 mb-4">
+          <div class="text-center">
+            <img 
+              class="rounded-circle" 
+              [src]="product.thumbnail" 
+              [alt]="product.title"
+              width="150" 
+              height="150"
+            >
+            <div class="mt-2">
+              <strong>{{product.title}}</strong>
+            </div>
+          </div>
+        </div>
+      }
+      
+      @empty {
+        <div class="col-12 text-center">
+          <p class="text-muted">Aucun produit trouvé.</p>
+        </div>
+      }
+    </div>
   </div>
 } @else {
-  Loading...
+  <div class="container mt-4" #loading>
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading products...</p>
+    </div>
+  </div>
 }
-
