@@ -46,6 +46,17 @@ export class AddCvComponent {
     },
   );
 
+  constructor() {
+    this.age.valueChanges.subscribe((age) => {
+      if (age < 18) {
+        this.path?.disable();
+        this.path?.setValue("");
+      } else {
+        this.path?.enable();
+      }
+    });
+  }
+
   addCv() {
     this.cvService.addCv(this.form.value as Cv).subscribe({
       next: (cv) => {
