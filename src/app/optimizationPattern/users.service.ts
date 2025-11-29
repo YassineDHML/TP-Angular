@@ -20,10 +20,13 @@ export class UsersService {
   getOddOrEven(isOdd = false): User[] {
     return this.users.filter((user) => !!(user.age % 2) == isOdd );
   }
+  // Retourner une nouvelle reference de tableau avec l'utilisateur ajouté
   addUser(list: User[], name: string) {
-    list.unshift({
+    const newUser: User = {
       name,
-      age: faker.datatype.number({min: 18, max: 30})
-    });
+      age : faker.datatype.number({min: 18, max: 30})
+    };
+    return [newUser, ...list];
   }
+
 }

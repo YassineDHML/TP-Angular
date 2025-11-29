@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, NgZone} from '@angular/core';
 import {User, UsersService} from "../users.service";
 import * as ChartJs from 'chart.js/auto';
 @Component({
@@ -10,7 +10,8 @@ export class RhComponent implements OnInit {
   oddUsers: User[];
   evenUsers: User[];
   chart: any;
-  constructor(private userService: UsersService) {
+  
+  constructor(private userService: UsersService, private ngZone: NgZone) {
     this.oddUsers = this.userService.getOddOrEven(true);
     this.evenUsers = this.userService.getOddOrEven();
   }
@@ -18,26 +19,30 @@ export class RhComponent implements OnInit {
   ngOnInit(): void {
         this.createChart();
     }
-  addUser(list: User[], newUser: string) {
-    this.userService.addUser(list, newUser);
+  addUser(list: User[], newUser: string, type: 'odd' | 'even') {
+    const newList = this.userService.addUser(list, newUser);
+    if (type === 'odd') this.oddUsers = newList;
+    else this.evenUsers = newList;
   }
   createChart(){
     const data = [
       { users: 'Workers', count: this.oddUsers.length },
       { users: 'Boss', count: this.evenUsers.length },
     ];
-    this.chart = new ChartJs.Chart("MyChart",
-    {
-      type: 'bar',
-        data: {
-          labels: data.map(row => row.users),
-        datasets: [
-        {
-          label: 'Entreprise stats',
-          data: data.map(row => row.count)
-        }
-      ]
-    }
+    this.ngZone.runOutsideAngular(() => { 
+      this.chart = new ChartJs.Chart("MyChart",
+      {
+        type: 'bar',
+          data: {
+            labels: data.map(row => row.users),
+          datasets: [
+          {
+            label: 'Entreprise stats',
+            data: data.map(row => row.count)
+          }
+        ]
+      }
+      });
     });
   }
 }
