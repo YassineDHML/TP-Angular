@@ -26,8 +26,8 @@ export class RhComponent implements OnInit {
   }
   createChart(){
     const data = [
-      { users: 'Workers', count: this.oddUsers.length },
-      { users: 'Boss', count: this.evenUsers.length },
+      { users: 'Boss', count: this.oddUsers.length },
+      { users: 'Workers', count: this.evenUsers.length },
     ];
     this.ngZone.runOutsideAngular(() => { 
       this.chart = new ChartJs.Chart("MyChart",
